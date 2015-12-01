@@ -1,5 +1,7 @@
 #include "Chrono.h"
 namespace Chrono{
+	vector<int> days = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+
 	bool is_leapyear(int y)
 	{
 		if (((y % 4 == 0 && y % 100 != 0) || y % 400 == 0))
@@ -134,6 +136,11 @@ namespace Chrono{
 			d = 1;
 		}
 		y += n;
+	}
+	Date& default_date()
+	{
+		static Date dd(1970, Date::jan, 1);
+		return dd;
 	}
 
 }

@@ -1,88 +1,103 @@
-#include "Chrono.h"
-
-class Book
-{
-public:
-	enum State{
-		Loaned = true,Reserver=false
-	};
-	class Invalid{};
-
-	bool loan();
-	bool back();
-
-	Book(string ISBN, string Name, string Author, Chrono::Date Copy_right_date, State loaned);
-
-	string ISBN() const{ return isbn; }
-	string Name()const{ return name; }
-	string Author()const{ return author; }
-	Chrono::Date Copy_right_date()const{ return copy_right_date; }
-private:
-	string isbn;
-	string name;
-	string author;
-	Chrono::Date copy_right_date;
-	State loaned;
-};
-
-bool is_valid_ISBN(string ISBN);
-
-int main()
-{
-	Chrono::Date d(2014, Chrono::Date::dec, 12);
-	Book book("12-12-12-x12", "HelloWorld", "Me", d, Book::Reserver);
-	return 0;
-}
-
-bool is_valid_ISBN(string ISBN)
-{//n-n-n-x
-	const char split = '-';
-	string n1, n2, n3, x;
-	int i, flag = 1;
-	for (i = 0; i < ISBN.length(); i++)
+#include "Book.h"
+namespace Book{
+	string booktype_to_string(Book::BookType type)
 	{
-		if (!(ISBN[i] >= '0'&&ISBN[i] <= '9'))
+		string result;
+		switch (type)
 		{
-			return false;
-		}			
-		else if (ISBN[i] == split)
-		{
-			flag++;
-			if (flag == 4)
-			{
-				i++;
-				break;
-			}
+		case Book::fiction:
+			result = "fiction";
+			break;
+		case Book::nofiction:
+			result = "nofiction";
+			break;
+		case Book::periodical:
+			result = "periodical";
+			break;
+		case Book::biography:
+			result = "biography";
+			break;
+		case Book::childern:
+			result = "childern";
+			break;
 		}
-		
+		return result;
 	}
-	for (; i < ISBN.length(); i++)
-	{
-		if (!((ISBN[i] >= '0'&&ISBN[i] <= '9') || (ISBN[i] >= 'a'&&ISBN[i] <= 'z') || (ISBN[i] >= 'A'&&ISBN[i] <= 'Z')))
-			return false;
-	}
-	return true;
-}
+	bool is_valid_ISBN(string ISBN)
+	{//n-n-n-x
+		const char split = '-';
+		string n1, n2, n3, x;
+		int i, flag = 1;
+		for (i = 0; i < ISBN.length(); i++)
+		{
+			if (ISBN[i] == split)
+			{
+				flag++;
+				if (flag == 4)
+				{
+					i++;
+					break;
+				}
 
-Book::Book(string ISBN, string Name, string Author, Chrono::Date Copy_right_date, State Loaned)
-:isbn(ISBN), name(Name), author(Author), copy_right_date(Copy_right_date), loaned(Loaned)
-{
-	if (!is_valid_ISBN(ISBN))
-		throw Invalid();
-}
-bool Book::loan()
-{
-	if (loaned == Reserver)
-		loaned = Loaned;
-	else
+			}
+			else if (!(ISBN[i] >= '0'&&ISBN[i] <= '9'))
+			{
+				return false;
+			}
+
+		}
+		for (; i < ISBN.length(); i++)
+		{
+			if (!((ISBN[i] >= '0'&&ISBN[i] <= '9') || (ISBN[i] >= 'a'&&ISBN[i] <= 'z') || (ISBN[i] >= 'A'&&ISBN[i] <= 'Z')))
+				return false;
+		}
+		return true;
+	}
+
+	bool operator==(const Book& a, const Book& b)
+	{
+		if (a.ISBN() == b.ISBN())
+			return true;
 		return false;
-	return true;
-}
-bool Book::back()
-{
-	if (loaned == Loaned)
-		loaned = Reserver;
-	else
-		return false;
-	return true;
+	}
+	bool operator!=(const Book& a, const Book& b)
+	{
+		return !(a == b);
+	}
+
+	ostream& operator<<(ostream& os, const Book& book)
+	{
+		Chrono::Date d = book.Copy_right_date();
+		string Loaned;
+		if (book.Loaned())
+			Loaned = "Loaned";
+		else
+			Loaned = "Reserver";
+		return os << '(' << book.ISBN() << ','
+			<< book.Name() << ',' << book.Author() << ','
+			<< book.Copy_right_date() << ',' << booktype_to_string(book.Type()) << ',' << Loaned << ')';
+	}
+
+	Book::Book(string ISBN, string Name, string Author, Chrono::Date Copy_right_date, BookType Type, State Loaned)
+		:isbn(ISBN), name(Name), author(Author), copy_right_date(Copy_right_date), type(Type), loaned(Loaned)
+	{
+		if (!is_valid_ISBN(ISBN))
+			throw Invalid();
+	}
+	bool Book::loan()
+	{
+		if (loaned == RESERVER)
+			loaned = LOANED;
+		else
+			return false;
+		return true;
+	}
+	bool Book::back()
+	{
+		if (loaned == LOANED)
+			loaned = RESERVER;
+		else
+			return false;
+		return true;
+	}
 }
