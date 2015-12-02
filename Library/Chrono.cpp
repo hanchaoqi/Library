@@ -2,6 +2,18 @@
 namespace Chrono{
 	vector<int> days = { 0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 
+	Date today()
+	{
+		time_t tt = time(NULL);
+		tm t;
+		localtime_s(&t,&tt);
+		int year = t.tm_year + 1900;
+		int month = t.tm_mon + 1;
+		int day = t.tm_mday;
+		Date dd(year, Chrono::int_to_month(month), day);
+		return dd;
+	}
+
 	bool is_leapyear(int y)
 	{
 		if (((y % 4 == 0 && y % 100 != 0) || y % 400 == 0))
@@ -66,7 +78,7 @@ namespace Chrono{
 	bool operator==(const Date& a, const Date& b)
 	{
 		return a.year() == b.year()
-			&& a.month() == b.year()
+			&& a.month() == b.month()
 			&& a.day() == b.day();
 	}
 	bool operator!=(const Date& a, const Date& b)

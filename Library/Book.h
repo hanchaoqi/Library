@@ -1,3 +1,6 @@
+#ifndef BOOK_H
+#define BOOK_H
+
 #include "Chrono.h"
 namespace Book{
 	class Book
@@ -38,3 +41,5 @@ namespace Book{
 
 	ostream& operator<<(ostream& os, const Book& book);
 }
+
+#endif

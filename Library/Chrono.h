@@ -1,3 +1,6 @@
+#ifndef CHRONO_H
+#define CHRONO_H
+
 #include "std_lib_facilities.h"
 namespace Chrono{
 	class Date{
@@ -19,6 +22,7 @@ namespace Chrono{
 		Month m;
 	};
 
+	Date today();
 	bool is_date(int y, Date::Month m, int d);
 	bool is_leapyear(int y);
 	int date_to_count(Date dd);
@@ -32,3 +36,5 @@ namespace Chrono{
 	ostream& operator<<(ostream& os, const Date& d);
 	istream& operator>>(istream& is, Date& dd);
 }
+
+#endif

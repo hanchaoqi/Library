@@ -1,15 +1,16 @@
-#include "Book.h"
+#include "Library.h"
 int main()
 {
-	Chrono::Date d(2014, Chrono::Date::dec, 12);
 	try
 	{
-		Book::Book book("12-12-12-x12", "HelloWorld", "Me", d, Book::Book::childern, Book::Book::RESERVER);
-		cout << book << endl;
+		Library::Library lib;
+		lib.add_book("89-89-09-sq2","Three body","ci",Chrono::today(),Book::Book::fiction);
+		lib.add_patron("qi", "123");
+		lib.loan_book(lib.Patrons()[0], lib.Books()[0]);
 	}
-	catch (Book::Book::Invalid)
+	catch (...)
 	{
-		error("Invalid book");
+		cout << "error" << endl;
 	}
 	return 0;
 }

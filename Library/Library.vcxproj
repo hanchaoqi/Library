@@ -80,11 +80,15 @@
   <ItemGroup>
     <ClInclude Include="Book.h" />
     <ClInclude Include="Chrono.h" />
+    <ClInclude Include="Library.h" />
+    <ClInclude Include="Patron.h" />
     <ClInclude Include="std_lib_facilities.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Book.cpp" />
     <ClCompile Include="Chrono.cpp" />
+    <ClCompile Include="Library.cpp" />
+    <ClCompile Include="Patron.cpp" />
     <ClCompile Include="start.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

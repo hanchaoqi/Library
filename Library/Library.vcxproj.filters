@@ -24,6 +24,12 @@
     <ClInclude Include="Book.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Patron.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Library.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Book.cpp">
@@ -33,6 +39,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="start.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Patron.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Library.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
